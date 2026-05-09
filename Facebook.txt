@@ -1,0 +1,37 @@
+import pandas as pd
+
+df = pd.read_csv('dataset_Facebook.csv',delimiter=';')
+
+df
+df.describe()   #count ,min max,etc of each columns
+
+
+df_subset_1 =df[['like','share']]
+df_subset_1                              #first subset
+
+df_subset_2 =df[['comment','Type']]
+df_subset_2                                
+
+
+merged_data = pd.merge(df_subset_2, df_subset_1, left_on='comment', right_on='like')
+merged_data
+
+
+#Sort Data
+sorted_data= merged_data.sort_values(by=['like'],ascending=False)
+sorted_data
+
+
+merged_data.transpose()   #Transporing Method 1
+merged_data.T    #method2
+
+
+df
+df.Type.unique()
+
+
+#shape
+df.shape
+
+#Reshape    
+pd.melt(df, id_vars =['Type'], value_vars =['comment'])         #Comment is id_vars and type is value_vars
