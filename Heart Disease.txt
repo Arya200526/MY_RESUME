@@ -1,0 +1,92 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv(r"C:\Users\aryag\OneDrive\Apps\Attachments\Desktop\Air and Heart\heart_disease.csv")
+
+df.head()
+df.shape
+df.info()
+df.describe()
+df.isnull().sum()
+
+#style
+sns.set_style("whitegrid")
+#Target Distribution
+plt.figure(figsize=(7,8))
+sns.countplot(x='Exercise Habits', data=df)
+plt.title("Heart Disease Target Distribution")
+plt.xlabel("Exercise Habit")
+plt.ylabel("count")
+plt.show()
+
+
+#Age Distribution
+plt.figure(figsize=(7,8))
+sns.histplot(df['Age'], bins=15, kde=True)
+plt.title("Age Distribution")
+plt.xlabel("Age")
+plt.ylabel("Frequency")
+plt.show()
+
+#Correlation Heatmap
+plt.figure(figsize=(5,7))
+sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm',fmt=".2f")
+plt.title("Correlation Heatmap")
+plt.show()
+
+
+#Boxplot for outliers Detection
+columns= ['Age','BMI','Cholesterol Level','Triglyceride Level']
+
+for col in columns:
+    plt.figure(figsize=(6,4))
+    sns.boxplot(x=df[col])
+    plt.title(f"Boxplot of {col}")
+    plt.show()
+
+
+print(df.columns)
+
+#Heart Disease By Gender
+plt.figure(figsize=(6,5))
+sns.countplot(x='Gender', hue='Heart Disease Status', data=df)
+plt.title("Heart Disease By Gender")
+plt.xlabel("Sex (0=Female, 1=Male)")
+plt.ylabel("Count")
+plt.show()
+
+
+
+#Smoking vs Heart Disease Status
+plt.figure(figsize=(7,5))
+sns.countplot(x='Smoking',hue='Heart Disease Status',data=df)
+plt.title("Exercise Habit vs Heart Disease")
+plt.xlabel("Exercise Habit")
+plt.ylabel("Count")
+plt.show()
+
+
+#Age Vs Stress Level
+plt.figure(figsize=(5,7))
+sns.scatterplot(x='Age',y='Stress Level',hue='Heart Disease Status',data=df)
+plt.title('Age Vs Stress Level')
+plt.xlabel('Age')
+plt.ylabel('Stress Level')
+plt.show()
+
+
+#Stress Level Distribution
+plt.figure(figsize=(7,8))
+sns.histplot(df['Stress Level'], bins=20, kde=True)
+plt.title("Stress Level Distribution")
+plt.xlabel("Stress Level")
+plt.ylabel("count")
+plt.show()
+
+
+#pairplot
+sns.pairplot(
+    df[['Age','BMI','Cholesterol Level','Stress Level','Sleep Hours','Heart Disease Status']],
+    hue='Heart Disease Status')
+plt.show()
